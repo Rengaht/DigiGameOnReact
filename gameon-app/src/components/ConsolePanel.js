@@ -1,7 +1,7 @@
 import React from 'react';
 
-export const ConsolePanel=({sendKey})=>{
-    const keys=['A','↑','B','↓','←','→'];
+const ConsolePanel=({sendKey})=>{
+    const keys=['A','↑','B','←','↓','→'];
     const onClick=(e, k)=>{
         console.log(k);
         sendKey(k);
@@ -17,3 +17,5 @@ export const ConsolePanel=({sendKey})=>{
         </div>
     );
 };
+
+export {ConsolePanel};

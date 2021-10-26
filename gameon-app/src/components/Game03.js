@@ -8,15 +8,20 @@ const Game03=()=>{
 
     const {liff, error,ready, profile} = useLiff();
     const [ws, setWs]=useState(null);
+    const [gamews, setGameWs]=useState(null);
     const [message, setMessage]=useState('');
 
     const [showConsole, setShowConsole]=useState(false);
 
     const connectWs=()=>{
         try{
-            const ss=webSocket('https://digi-dev.ultracombos.net:5000/');
+            console.log('connect to socket...');
+            const ss=webSocket('https://digi-dev.ultracombos.net:5000/game');
+
+            // const gamess=webSocket('https://digi-dev.ultracombos.net:5000/game',{ forceNew: true });
             
             setWs(ss);
+            // setGameWs(gamess);
 
         }catch(error){
             setMessage(error.toString());

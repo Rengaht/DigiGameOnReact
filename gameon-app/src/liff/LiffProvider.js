@@ -40,8 +40,12 @@ export const LiffProvider=(({liffId, children})=>{
         
             console.log('get profile...');
             
-            const profile = await liff.getProfile();
-            setProfile(profile);
+            try{
+                const profile = await liff.getProfile();
+                setProfile(profile);
+            }catch(err){
+                console.log(err.toString());
+            }
             
         })();
     },[liff,ready]);
