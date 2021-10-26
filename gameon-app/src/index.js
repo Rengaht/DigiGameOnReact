@@ -1,0 +1,38 @@
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+
+import {BrowserRouter, Switch} from 'react-router-dom';
+import { LiffProvider } from './liff/LiffProvider';
+
+
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+const liffId = process.env.REACT_APP_LIFF_ID;
+const stubEnabled = process.env.NODE_ENV !== 'production';
+
+
+ReactDOM.render(
+  <React.StrictMode>
+    <LiffProvider liffId={liffId}>
+      <BrowserRouter>
+        <Switch>
+          <App />          
+        </Switch>
+      </BrowserRouter>
+    </LiffProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
