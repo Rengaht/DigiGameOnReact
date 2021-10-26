@@ -5,11 +5,8 @@ import { Route } from 'react-router-dom';
 
 import { useLiff } from './liff/LiffProvider';
 
-import {GameConsole} from './components/GameConsole';
-
-// import { LiffConsumer } from 'react-liff';
-
-import dotenv from 'dotenv';
+import {Game01} from './components/Game01';
+import {Game03} from './components/Game03';
 
 const App= () => {
 
@@ -29,9 +26,10 @@ const App= () => {
 
   return (
    <div className="container">
-      <div> LIFF Status = {ready?"Ready":"N"}</div>
-      <div> User = {displayName}</div>
-      <Route path="/console" component={GameConsole}/>      
+      <div className="logText"> LIFF Status = {ready?"Ready":"N"}</div>
+      <div className="logText"> User = {displayName}</div>
+      <Route path="/Game01" component={Game01}/>
+      <Route path="/Game03" component={Game03}/>
     </div>
    
   );

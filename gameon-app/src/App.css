@@ -63,3 +63,8 @@ button{
 .consolePanel{
   width:100%;
 }
+
+.logText{
+  color:darkorange;
+  font-size: .5rem;
+}

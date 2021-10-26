@@ -2,49 +2,45 @@ import React, { useEffect, useState } from 'react';
 import webSocket from 'socket.io-client';
 
 import { useLiff } from '../liff/LiffProvider';
+import { ConsolePanel } from './ConsolePanel';
 
-
-const ConsolePanel=({sendKey})=>{
-    const keys=['A','↑','B','↓','←','→'];
-    const onClick=(e, k)=>{
-        console.log(k);
-        sendKey(k);
-    };
-
-    const thekeys=keys.map((k)=>(
-        <button className="consoleKey" onClick={(e)=>onClick(e,k)} key={k}>{k}</button>
-    ));
-
-    return (
-        <div className="consolePanel">
-            {thekeys}
-        </div>
-    );
-};
-
-const GameConsole=()=>{
+const Game03=()=>{
 
     const {liff, error,ready, profile} = useLiff();
     const [ws, setWs]=useState(null);
     const [message, setMessage]=useState('');
 
-    useEffect(()=>{
+    const [showConsole, setShowConsole]=useState(false);
+
+    const connectWs=()=>{
         try{
             const ss=webSocket('https://digi-dev.ultracombos.net:5000/');
+            
             setWs(ss);
+
         }catch(error){
             setMessage(error.toString());
         }
-    },[setWs]);
+    };
 
     const initWs=()=>{
+        
         ws.on('second', message_=>{
             // console.log(message_.toString());
             setMessage(`rcv : ${message_.second.toString()}`);
-        })
+        });
+
+        ws.on('result', message_=>{
+            // console.log(message_.toString());
+            setMessage(`rcv : ${message_.toString()}`);
+        });
+
         ws.on("connect", () => {
             console.log('socekt connected!');
             setMessage('ws connected!');
+
+            
+            setShowConsole(true);
         });
         ws.on("disconnect", () => {
             console.log('socekt disconnected!');
@@ -63,12 +59,13 @@ const GameConsole=()=>{
 
     return(
         <div>
-            <h1>GAME CONSOLE</h1>
-            <h1>輸入代碼</h1>
-            <ConsolePanel sendKey={sendMessage}/>        
+            <h1>GAME#03 - </h1>
+            {!showConsole && <button onClick={connectWs}>進入遊戲</button>}
+            {showConsole && <ConsolePanel sendKey={sendMessage}/>}
+            
             <div>ws : {message}</div>    
         </div>
     );
 };
 
-export {GameConsole};
+export {Game03};
