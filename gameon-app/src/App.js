@@ -7,6 +7,7 @@ import { useLiff } from './liff/LiffProvider';
 
 import {Game01} from './components/Game01';
 import {Game03} from './components/Game03';
+import {GameConsole} from './components/GameConsole';
 
 const App= () => {
 
@@ -28,8 +29,9 @@ const App= () => {
    <div className="container">
       <div className="logText"> LIFF Status = {ready?"Ready":"N"}</div>
       <div className="logText"> User = {displayName}</div>
-      <Route path="/Game01" component={Game01}/>
-      <Route path="/Game03" component={Game03}/>
+      <Route path="/game01" component={Game01}/>
+      <Route path="/game03" component={Game03}/>
+      <Route path="/console" component={GameConsole}/>
     </div>
    
   );

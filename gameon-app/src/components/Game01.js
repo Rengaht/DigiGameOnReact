@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import webSocket from 'socket.io-client';
-
 import { useLiff } from '../liff/LiffProvider';
 
 const Game01=()=>{
