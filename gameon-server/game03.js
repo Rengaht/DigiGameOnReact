@@ -34,7 +34,7 @@ class Game03{
             });
             
             socket.on(GameEvent.Register, (data)=>{
-               
+                console.log(`user register: ${data.uid}`);
                 var uid=data.uid || "u"+Date.now();
 
                 //TODO: accpet user conditionally
@@ -55,7 +55,7 @@ class Game03{
 
                 // console.log(`${this.name} input : ${data.uid} / ${data.key}`);
                 let user=this.users.find(el => el.uid==data.uid);
-                user.input+=data.key;
+                user.input+=data.data;
 
                 console.log(user.input);
 
@@ -69,7 +69,7 @@ class Game03{
 
                     user.score++;
                     socket.emit(GameEvent.Score,{
-                        score: user.score
+                        data: user.score
                     });                    
                 }
                 
@@ -78,7 +78,7 @@ class Game03{
                     this.unity.emit(GameEvent.Input,data);
                     this.unity.emit(GameEvent.Score,{
                         uid:user.uid,
-                        score:user.score
+                        data:user.score
                     });
                 }
 
@@ -97,9 +97,12 @@ class Game03{
     }
     addUser(uid, socket){
 
+        
         if(uid=='unity'){
             if(this.unity!=null) this.unity.disconnect();
             this.unity=socket;
+
+            console.log("unity logged in!");
         }
 
         this.users.push({
@@ -109,16 +112,21 @@ class Game03{
             score:0
         });
 
-        this.updatePlayer();
+        var count=this.updatePlayer();
         
-        console.log(`User in ${this.name} = ${this.users.length}`);
-        if(this.users.length>=this.MIN_USER) this.startGame();
+    
+        console.log(`User in ${this.name} = ${count}`);
+        if(count>=this.MIN_USER) this.startGame();
 
     }
     updatePlayer(){
+
+        var count=this.users.filter(user=>user.uid!='unity').length;
         this.roomBroadcast(GameEvent.Status,{
-            players: this.users.filter(user=>user.uid!='unity').length,
+            data: count,
         });
+
+        return count;
     }
 
     roomBroadcast(type,data){
