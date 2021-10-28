@@ -10,35 +10,23 @@ app.use(cors());
 // app.use(express.json({ verify: verifyRequest }));
 
 
+// ssl
+const https=require('https');
+const fs=require('fs');
+
+var options={
+	key:fs.readFileSync('ssl-keys/privkey1.pem'),
+	cert:fs.readFileSync('ssl-keys/fullchain1.pem'),
+};
+
+
 // socket.io
-const http = require('http');
-const server = http.createServer(app);
-// const server=https.createServer(options,app);
-const { Server } = require("socket.io");
-const io = new Server(server,{
-    cors:{ origin: '*',}
-});
+// const http = require('http');
+// const server = http.createServer(app);
+const server=https.createServer(options,app);
+// const { Server } = require("socket.io");
 
-io.on('connection', (socket) => {
-    console.log('a user connected');
-    socket.emit('message', {'message': 'hello world'});
-    
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
-
-    setInterval(function () {
-        // console.log('send second!');
-        socket.emit('second', { 'second': new Date().getSeconds() });
-    }, 1000);
-
-    socket.on('input',(data)=>{
-        console.log(data);
-		socket.broadcast.emit('input',data);
-    });
-});
-
-
+var io = require('./socket').create(server);
 
 
 app.get('/api', function(req, res) {
