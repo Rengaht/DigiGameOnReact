@@ -29,7 +29,7 @@ const Game03=()=>{
         try{
             console.log('connect to socket...');
             // const ss=webSocket(`http://digi-dev.ultracombos.net:5000/${GameID}`);
-            const ss=webSocket(`http://localhost:5000/${GameID}`);
+            const ss=webSocket(`http://localhost:7777/${GameID}`);
             setWs(ss);
             // setGameWs(gamess);
 
@@ -59,7 +59,7 @@ const Game03=()=>{
             }).catch(function(error) {
                 window.alert('Error sending message: ' + error);
             });
-            
+
         });
 
         ws.on(GameEvent.Status, message_=>{
