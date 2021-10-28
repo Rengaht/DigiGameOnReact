@@ -28,8 +28,8 @@ const Game03=()=>{
 
         try{
             console.log('connect to socket...');
-            // const ss=webSocket(`https://digi-dev.ultracombos.net:7777/${GameID}`);
-            const ss=webSocket(`http://localhost:7777/${GameID}`);
+            const ss=webSocket(`https://digi-dev.ultracombos.net:7777/${GameID}`);
+            // const ss=webSocket(`http://localhost:7777/${GameID}`);
             setWs(ss);
             // setGameWs(gamess);
 
