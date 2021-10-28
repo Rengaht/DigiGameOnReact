@@ -1,6 +1,9 @@
 const { Server } = require("socket.io");
+const Game03=require('./gameon-server/Game03');
 
 module.exports.create=function(server){
+
+    console.log('create server...');
 
     const io = new Server(server,{
         cors:{ origin: '*',}
@@ -25,17 +28,8 @@ module.exports.create=function(server){
         });
     });
     
-    
-    
-    const game=io.of('/game');
-    game.on('connection',(socket) => {
-        console.log('user connected to /game');
-    
-        socket.on('input',(data)=>{
-            console.log(`[game03] ${data.id} / ${data.key}`);
-            // socket.broadcast.emit('input',data);
-        });
-    });
+    const game03=new Game03('game03',io);
 
+    
     return io;
 }
