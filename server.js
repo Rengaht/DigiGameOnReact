@@ -21,9 +21,9 @@ var options={
 
 
 // socket.io
-const http = require('http');
-const server = http.createServer(app);
-// const server=https.createServer(options,app);
+//const http = require('http');
+//const server = http.createServer(app);
+const server=https.createServer(options,app);
 var io = require('./socket').create(server);
 
 
