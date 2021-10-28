@@ -28,7 +28,7 @@ const Game03=()=>{
 
         try{
             console.log('connect to socket...');
-            // const ss=webSocket(`http://digi-dev.ultracombos.net:5000/${GameID}`);
+            // const ss=webSocket(`https://digi-dev.ultracombos.net:7777/${GameID}`);
             const ss=webSocket(`http://localhost:7777/${GameID}`);
             setWs(ss);
             // setGameWs(gamess);
@@ -65,12 +65,12 @@ const Game03=()=>{
         ws.on(GameEvent.Status, message_=>{
             console.log(JSON.stringify(message_));
 
-            setPlayers(message_.players);
+            setPlayers(message_.data);
         });
 
         ws.on(GameEvent.Score, message_=>{
             console.log(JSON.stringify(message_));
-            setScore(message_.score);
+            setScore(message_.data);
 
         });
 
@@ -117,7 +117,7 @@ const Game03=()=>{
     const sendMessage=(key_)=>{
         if(ws) ws.emit(GameEvent.Input, {
             uid: profile?.userId || uid,
-            key:key_
+            data:key_
         });
     };
 

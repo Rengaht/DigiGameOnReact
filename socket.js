@@ -1,5 +1,5 @@
 const { Server } = require("socket.io");
-const Game03=require('./gameon-server/Game03');
+const Game03=require('./gameon-server/game03');
 
 module.exports.create=function(server){
 
