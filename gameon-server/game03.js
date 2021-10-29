@@ -185,33 +185,37 @@ class Game03{
 
         this.users.forEach(user=>{
 		
-		if(user.uid=="unity") return;
+            if(user.uid=="unity") return;
 
-		console.log(`send user data ${user.uid} ${user.score}`);
+            console.log(`send user data ${user.uid} ${user.score}`);
 		
-                bonnie.writeParameterToBonnie({
-                    "bot_id":"bot-M-BOieOXZ",
-                    "bot_pid":"507oftxz",
-                    "bot_channel":"1",
-                    "bot_raw_uid": user.uid,     
-                    "params":{
-                        "game03-score": {
-                            "value":user.score
-                        }
+            bonnie.writeParameterToBonnie({
+                "bot_id":"bot-M-BOieOXZ",
+                "bot_pid":"507oftxz",
+                "bot_channel":"1",
+                "bot_raw_uid": user.uid,     
+                "params":{
+                    "game03-score": {
+                        "value":user.score
                     }
-                }).then(res=>{                    
-                    console.log(JSON.stringify(res));
-                }).catch(err=>{
-                    console.log(err);
-                });
+                }
+            }).then(res=>{                    
+                console.log(JSON.stringify(res));
+            }).catch(err=>{
+                console.log(err);
+            });
         });
 
 	    setTimeout(()=>{
-		if(user.uid=="unity") return;
+		    console.log("//////// CLOSE ALL SOCKET ////////");
 
-		    this.users.foreach(user=>{
-			    user.socket.disconnect();
-		    });		
+		    // this.users.foreach(user=>{
+			//     user.socket.disconnect();
+		    // });		
+
+            //disconnect all
+            const clients=this.namespace.clients();
+            clients.forEach(client => client.disconnect());
 
 		    this.users=[];
         },3000);

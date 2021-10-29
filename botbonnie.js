@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const axios=require('axios');
 
-const ENTER_GAME_KEYWORD="Enter Game";
+const ENTER_GAME_KEYWORD="Enter Game ";
 
 
 // botbonnie api secret
