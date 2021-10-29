@@ -1,7 +1,7 @@
 const { isFunction, isTaggedTemplateExpression } = require('@babel/types');
 const GameEvent=require('./GameEvent');
 // console.log(JSON.stringify(GameEvent));
-
+const bonnie=require("../botbonnie"); 
 
 class Game03{    
 
@@ -177,7 +177,23 @@ class Game03{
 
         setTimeout(()=>{
             this.users.forEach(user=>{
-                user.socket.disconnect();
+                bonnie.writeParameterToBonnie({
+                    "bot_id":"bot-M-BOieOXZ",
+                    "bot_pid":"507oftxz",
+                    "bot_channel":"1",
+                    "bot_raw_uid": user.uid,     
+                    "params":{
+                        "game03-score": {
+                            "value":user.score
+                        }
+                    }
+                }).then(res=>{
+                    
+                    console.log(JSON.stringify(res));
+                    user.socket.disconnect();
+                }).catch(err=>{
+                    console.log(err);
+                });
             });
 
         },3000);
