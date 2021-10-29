@@ -1,5 +1,8 @@
+const crypto = require('crypto');
+const axios=require('axios');
+
+
 // botbonnie api secret
-var crypto = require('crypto');
 function abortOnError(err, req, res, next){  
 	if(err){
 		console.log(err);    
@@ -47,13 +50,12 @@ module.exports.setupBonnie=function(express, app){
 
         var input_txt=req.body.userParams.input;
         
-        var message={
-            "type":"text",
-            "text":`no response for user_input= ${input_txt}`
-        };
+        // var message={
+        //     "type":"text",
+        //     "text":`no response for user_input= ${input_txt}`
+        // };
         
-        if(input_txt=="看分數" || input_txt=="score") message=createScoreMessage(req);
-
+        var message=createScoreMessage(req.query.input, req);			
         
         res.json(message);
 
@@ -61,17 +63,19 @@ module.exports.setupBonnie=function(express, app){
 
 }
 
-function createScoreMessage(req){
-    var txt=`目前得分 : ${req.body.userParams.score.value}`;
-	var liff_url='https://liff.line.me/1656533144-Mee7ap40';
-	var url=`${liff_url}/score_page?data=${JSON.stringify(req.body.userParams)}&rawId=${req.body.user.rawId}`;
+function createScoreMessage(input, req){
+
+    var txt=`LINK`;
+	var liff_url=`https://liff.line.me/${process.env.LIFF_ID}`;
+
+	var url=`${liff_url}/${input}?data=${JSON.stringify(req.body.userParams)}&rawId=${req.body.user.rawId}`;
 
 	console.log(url);
 
 	const score_message={
 		"type":"text", "text":txt,
 		"buttons":[
-			{ "title":"個人分數頁", "type":"web_url", "value":url}
+			{ "title":input, "type":"web_url", "value":url}
 		]
 	};
 
@@ -80,6 +84,8 @@ function createScoreMessage(req){
 
 module.exports.writeParameterToBonnie=async function writeParameterToBonnie(user){
 
+
+	
     console.log('get user data='+JSON.stringify(user));
     var data={
         "bot_id":"bot-M-BOieOXZ",
@@ -93,7 +99,7 @@ module.exports.writeParameterToBonnie=async function writeParameterToBonnie(user
 		method:'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY29wZSI6ImFsbCIsImJvdElkIjoiYm90LU0tQk9pZU9YWiIsImlhdCI6MTYzNDE5NzUzMSwiaXNzIjoiYm90Ym9ubmllX2NvbnNvbGUifQ._Z_iSewMVhwuNKKFSQ-WneFgzVFDq1PFn3M00qhdbOY',
+			'Authorization':`Bearer ${process.env.BOTBONNIE_TOKEN}`,
 		},
 		data:JSON.stringify(data),
 	}

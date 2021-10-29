@@ -102,6 +102,14 @@ const Game03=()=>{
 
     // auto connect
     useEffect(()=>{
+
+        var urlSearchParams=new URLSearchParams(window.location.search);
+        var params = Object.fromEntries(urlSearchParams.entries());
+
+        setUId(params.rawId);
+
+        console.log('get rawId = '+params.rawId);
+
         connectWs();
     },[setWs]);
 

@@ -5,6 +5,7 @@ const Score=()=>{
     
     const {liff, error,ready, profile} = useLiff();
     const [debug, setDebug]=useState('');    
+    const [rawId, setRawId]=useState('');
 
     useEffect(()=>{
         
@@ -13,6 +14,8 @@ const Score=()=>{
 
         setDebug(params.data.toString());
 
+        setRawId(params.rawId);
+
     },[setDebug]);
 
     return(
@@ -20,6 +23,7 @@ const Score=()=>{
             <h1>SCORE</h1>
             <h1>INPUT: {command}</h1>            
             <p className="logText">log: {debug}</p>
+            <p>Botbonnie rawId {params.rawId}</p>            
         </div>
     );
 };

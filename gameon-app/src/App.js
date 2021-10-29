@@ -8,6 +8,7 @@ import { useLiff } from './liff/LiffProvider';
 import {Game01} from './components/Game01';
 import {Game03} from './components/Game03';
 import {GameConsole} from './components/GameConsole';
+import {Score} from './components/Score';
 
 const App= () => {
 
@@ -32,6 +33,7 @@ const App= () => {
       <Route path="/game01" component={Game01}/>
       <Route path="/game03" component={Game03}/>
       <Route path="/console" component={GameConsole}/>
+      <Route path="/score" component={Score}/>
     </div>
    
   );
