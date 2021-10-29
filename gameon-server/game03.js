@@ -59,7 +59,11 @@ class Game03{
 
                 // console.log(`${this.name} input : ${data.uid} / ${data.key}`);
                 let user=this.users.find(el => el.uid==data.uid);
-                user.input+=data.data;
+                if(!user){
+			console.log(`no user ${data.uid}`);
+			return;
+		}
+		user.input+=data.data;
 
                 console.log(user.input);
 
@@ -181,8 +185,10 @@ class Game03{
 
         this.users.forEach(user=>{
 		
-		    console.log(`send user data ${user.uid} ${user.score}`);
+		if(user.uid=="unity") return;
 
+		console.log(`send user data ${user.uid} ${user.score}`);
+		
                 bonnie.writeParameterToBonnie({
                     "bot_id":"bot-M-BOieOXZ",
                     "bot_pid":"507oftxz",
@@ -201,6 +207,8 @@ class Game03{
         });
 
 	    setTimeout(()=>{
+		if(user.uid=="unity") return;
+
 		    this.users.foreach(user=>{
 			    user.socket.disconnect();
 		    });		

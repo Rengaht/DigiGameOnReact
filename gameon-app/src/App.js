@@ -20,7 +20,7 @@ const App= () => {
   useEffect(() => {
     
     var urlSearchParams=new URLSearchParams(window.location.search);
-    var params = Object.fromEntries(urlSearchParams.entries());
+    var params = Object.fromEntries(urlSearchParams.entries()) || `u${Date.now()}`;
     setRawId(params.rawId);
     console.log(JSON.stringify(params));
 
