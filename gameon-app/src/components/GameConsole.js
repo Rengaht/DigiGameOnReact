@@ -17,10 +17,17 @@ const GameConsole=()=>{
         setCommand('');
     };
     const SendCommand=()=>{
+        
         setDebug(`sending cmd = ${command}`);
-        setTimeout(()=>{
+
+        liff.sendMessages([{
+            'type': 'text',
+            'text': `Enter Game ${command}`
+        }]).then(function() {
             liff.closeWindow();
-        },3000);
+        }).catch(function(error) {
+            window.alert('Error sending message: ' + error);
+        });
     }; 
 
 

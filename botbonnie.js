@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 const axios=require('axios');
 
+const ENTER_GAME_KEYWORD="Enter Game";
+
 
 // botbonnie api secret
 function abortOnError(err, req, res, next){  
@@ -55,7 +57,7 @@ module.exports.setupBonnie=function(express, app){
         //     "text":`no response for user_input= ${input_txt}`
         // };
         
-        var message=createScoreMessage(req.query.input, req);			
+        var message=createMessage(req.query.input, req);			
         
         res.json(message);
 
@@ -63,10 +65,22 @@ module.exports.setupBonnie=function(express, app){
 
 }
 
-function createScoreMessage(input, req){
+function createMessage(input, req){
 
     var txt=`LINK`;
 	var liff_url=`https://liff.line.me/${process.env.LIFF_ID}`;
+
+
+	if(input=="game"){		
+		var input_str=req.body.userParams.input;
+		var cmd=input_str.substring(input_str.indexOf(ENTER_GAME_KEYWORD)+ENTER_GAME_KEYWORD.length);
+
+		// TODO: match game code
+		input+="03";
+
+		console.log(`get input: ${input_str} => parse command: ${cmd} => open: ${input}`);
+	}
+
 
 	var url=`${liff_url}/${input}?data=${JSON.stringify(req.body.userParams)}&rawId=${req.body.user.rawId}`;
 

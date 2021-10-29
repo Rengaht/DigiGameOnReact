@@ -31,23 +31,6 @@ var io = require('./socket').create(server);
 const bonnie=require("./botbonnie"); 
 bonnie.setupBonnie(express, app);
 
-bonnie.writeParameterToBonnie({
-	"bot_id":"bot-M-BOieOXZ",
-	"bot_pid":"507oftxz",
-	"bot_channel":"1",
-	"bot_raw_uid": "U032e96a427f7ba5fd6b16c9fe138a7dd",     
-	"params":{
-		"game03-score": {
-			"value":123
-		}
-	}
-}).then(res=>{
-	
-	console.log(JSON.stringify(res));
-
-}).catch(err=>{
-	console.log(err);
-});
 
 // app.get('/game_result', function(req, res) {
   

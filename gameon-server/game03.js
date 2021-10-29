@@ -179,9 +179,9 @@ class Game03{
 
         
 
-            this.users.forEach(user=>{
+        this.users.forEach(user=>{
 		
-		console.log(`send user data ${user.uid} ${user.score}`);
+		    console.log(`send user data ${user.uid} ${user.score}`);
 
                 bonnie.writeParameterToBonnie({
                     "bot_id":"bot-M-BOieOXZ",
@@ -198,14 +198,14 @@ class Game03{
                 }).catch(err=>{
                     console.log(err);
                 });
-            });
+        });
 
-	setTimeout(()=>{
-		this.users.foreach(user=>{
-			user.socket.disconnect();
-		});		
+	    setTimeout(()=>{
+		    this.users.foreach(user=>{
+			    user.socket.disconnect();
+		    });		
 
-		this.users=[];
+		    this.users=[];
         },3000);
 
        
