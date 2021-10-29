@@ -3,6 +3,10 @@ const GameEvent=require('./GameEvent');
 // console.log(JSON.stringify(GameEvent));
 const bonnie=require("../botbonnie"); 
 
+const dotenv=require('dotenv');
+dotenv.config();
+
+
 class Game03{    
 
     constructor(name, io){
