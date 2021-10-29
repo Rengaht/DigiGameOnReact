@@ -26,7 +26,7 @@ function verifyRequest(req, res, buf, encoding){
 	if(!expected) return;
 
 	var calculated = getSignature(buf);
-	console.log("X-Hub-Signature:", expected, "Content:", "-" + buf.toString('utf8') + "-");
+	//console.log("X-Hub-Signature:", expected, "Content:", "-" + buf.toString('utf8') + "-");
 
 	if(expected !== calculated){
 		throw new Error("Invalid signature.");
@@ -70,7 +70,7 @@ function createScoreMessage(input, req){
 
 	var url=`${liff_url}/${input}?data=${JSON.stringify(req.body.userParams)}&rawId=${req.body.user.rawId}`;
 
-	console.log(url);
+	console.log("sending url= "+url);
 
 	const score_message={
 		"type":"text", "text":txt,

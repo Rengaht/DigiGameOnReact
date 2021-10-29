@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLiff } from '../liff/LiffProvider';
 
 const Score=(props)=>{
+	console.log(JSON.stringify(props));
     
     const {liff, error,ready, profile} = useLiff();
     const [debug, setDebug]=useState('');    

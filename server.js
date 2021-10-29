@@ -35,7 +35,7 @@ bonnie.writeParameterToBonnie({
 	"bot_id":"bot-M-BOieOXZ",
 	"bot_pid":"507oftxz",
 	"bot_channel":"1",
-	"bot_raw_uid": "Ua5ee453c2a37d2c6b350e914cb982c8b",     
+	"bot_raw_uid": "U032e96a427f7ba5fd6b16c9fe138a7dd",     
 	"params":{
 		"game03-score": {
 			"value":123

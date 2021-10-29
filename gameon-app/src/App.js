@@ -22,7 +22,7 @@ const App= () => {
     var urlSearchParams=new URLSearchParams(window.location.search);
     var params = Object.fromEntries(urlSearchParams.entries());
     setRawId(params.rawId);
-
+    console.log(JSON.stringify(params));
 
     if(!profile) return;
     
@@ -36,10 +36,10 @@ const App= () => {
    <div className="container">
       <div className="logText"> LIFF Status = {ready?"Ready":"N"}</div>
       <div className="logText"> User = {displayName}</div>
-      <Route path="/game01" component={Game01} rawId={rawId}/>
-      <Route path="/game03" component={Game03} rawId={rawId}/>
-      <Route path="/console" component={GameConsole} rawId={rawId}/>
-      <Route path="/score" component={Score} rawId={rawId}/>
+      <Route path="/game01" component={(props)=> <Game01 rawId={rawId}/> } />
+      <Route path="/game03" component={(props)=> <Game03 rawId={rawId}/> } />
+      <Route path="/console" component={(props)=> <GameConsole rawId={rawId}/> } />
+      <Route path="/score" component={(props)=> <Score rawId={rawId}/> } />
     </div>
    
   );
