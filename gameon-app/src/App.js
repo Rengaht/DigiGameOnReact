@@ -13,11 +13,17 @@ import {Score} from './components/Score';
 const App= () => {
 
   const [displayName, setDisplayName] = useState('no profile');
-  
+  const [rawId, setRawId]=useState();
   const {liff, error,ready, profile} = useLiff();
-
+  
 
   useEffect(() => {
+    
+    var urlSearchParams=new URLSearchParams(window.location.search);
+    var params = Object.fromEntries(urlSearchParams.entries());
+    setRawId(params.rawId);
+
+
     if(!profile) return;
     
     console.log(profile.userId);
@@ -30,10 +36,10 @@ const App= () => {
    <div className="container">
       <div className="logText"> LIFF Status = {ready?"Ready":"N"}</div>
       <div className="logText"> User = {displayName}</div>
-      <Route path="/game01" component={Game01}/>
-      <Route path="/game03" component={Game03}/>
-      <Route path="/console" component={GameConsole}/>
-      <Route path="/score" component={Score}/>
+      <Route path="/game01" component={Game01} rawId={rawId}/>
+      <Route path="/game03" component={Game03} rawId={rawId}/>
+      <Route path="/console" component={GameConsole} rawId={rawId}/>
+      <Route path="/score" component={Score} rawId={rawId}/>
     </div>
    
   );

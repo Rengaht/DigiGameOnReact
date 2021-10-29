@@ -7,7 +7,7 @@ import { ConsolePanel } from './ConsolePanel';
 import GameEvent from '../../../gameon-server/GameEvent';
 
 
-const Game03=()=>{
+const Game03=(props)=>{
 
     const GameID="game03";
 
@@ -16,7 +16,7 @@ const Game03=()=>{
     const [message, setMessage]=useState('');
 
     const [showConsole, setShowConsole]=useState(false);
-    const [uid, setUId]=useState();
+    // const [uid, setUId]=useState();
 
     const [score, setScore]=useState(0);
     const [players, setPlayers]=useState(0);
@@ -93,7 +93,7 @@ const Game03=()=>{
             setMessage("Joined !");
             setShowConsole(true);
 
-            setUId(message_.data.uid);
+            // setUId(message_.data.uid);
             setScore(0);
         });
     };
@@ -102,14 +102,7 @@ const Game03=()=>{
 
     // auto connect
     useEffect(()=>{
-
-        var urlSearchParams=new URLSearchParams(window.location.search);
-        var params = Object.fromEntries(urlSearchParams.entries());
-
-        setUId(params.rawId);
-
-        console.log('get rawId = '+params.rawId);
-
+        
         connectWs();
     },[setWs]);
 
@@ -119,12 +112,12 @@ const Game03=()=>{
 
     const joinGame=()=>{
         ws.emit(GameEvent.Register,{
-            uid:profile?.userId,            
+            uid:props.rawId,            
         });
     };
     const sendMessage=(key_)=>{
         if(ws) ws.emit(GameEvent.Input, {
-            uid: profile?.userId || uid,
+            uid: props.rawId,
             data:key_
         });
     };
