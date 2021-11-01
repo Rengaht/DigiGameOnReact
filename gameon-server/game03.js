@@ -83,11 +83,14 @@ class Game03{
                 
 
                 if(this.unity){
-                    this.unity.emit(GameEvent.Input,data);
-                    this.unity.emit(GameEvent.Score,{
-                        uid:user.uid,
-                        data:user.score
+                    this.unity.emit(GameEvent.Input,{
+                        score:user.score,
+                        ...data
                     });
+                    // this.unity.emit(GameEvent.Score,{
+                    //     uid:user.uid,
+                    //     data:user.score
+                    // });
                 }
 
             });
