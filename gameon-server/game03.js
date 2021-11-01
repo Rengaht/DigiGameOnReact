@@ -81,13 +81,34 @@ class Game03{
                 console.log("get score data!!!");
                 console.log(JSON.stringify(data));
 		
-		const user=this.users.find(el=> el.uid==data.uid);
+		        const user=this.users.find(el=> el.uid==data.uid);
                 if(user){
-		   console.log("send to user:"+user.uid);
+		            console.log("send to user:"+user.uid);
                     user.socket.emit(GameEvent.Score,{
                         uid:data.uid,
                         data: data.score,
                     });
+
+                    
+                    bonnie.writeParameterToBonnie({
+                        "bot_id":"bot-M-BOieOXZ",
+                        "bot_pid":"507oftxz",
+                        "bot_channel":"1",
+                        "bot_raw_uid": user.uid,     
+                        "params":{
+                            "game03-score": {
+                                "value":user.score
+                            }
+                        }
+                    }).then(res=>{                    
+                        console.log(JSON.stringify(res));
+                    }).catch(err=>{
+                        console.log(err);
+                    });
+                    
+                    setTimeout(()=>{
+                        user.socket.close();
+                    },3000);
                 }
             });
             
@@ -152,12 +173,6 @@ class Game03{
 
         this.roomBroadcast(GameEvent.Start,{});
 
-
-
-        // clearTimeout(this.gameTimer);        
-        // this.gameTimer=setTimeout(()=>{
-        //     this.endGame();
-        // },this.GAME_TIME);
     }
 
     endGame(){
@@ -169,54 +184,7 @@ class Game03{
 
         this.roomBroadcast(GameEvent.End,{});
 
-        // this.users.forEach(user=>{
-        //     console.log(`${user.uid} / ${user.score}`);
-        //     user.socket.emit(GameEvent.Score,{
-        //         score: user.score
-        //     });
-        // });
 
-        
-
-        // this.users.forEach(user=>{
-		
-        //     if(user.uid=="unity") return;
-
-        //     console.log(`send user data ${user.uid} ${user.score}`);
-		
-        //     bonnie.writeParameterToBonnie({
-        //         "bot_id":"bot-M-BOieOXZ",
-        //         "bot_pid":"507oftxz",
-        //         "bot_channel":"1",
-        //         "bot_raw_uid": user.uid,     
-        //         "params":{
-        //             "game03-score": {
-        //                 "value":user.score
-        //             }
-        //         }
-        //     }).then(res=>{                    
-        //         console.log(JSON.stringify(res));
-        //     }).catch(err=>{
-        //         console.log(err);
-        //     });
-        // });
-
-	    // setTimeout(()=>{
-		//     console.log("//////// CLOSE ALL SOCKET ////////");
-
-		//     // this.users.foreach(user=>{
-		// 	//     user.socket.disconnect();
-		//     // });		
-
-        //     //disconnect all
-        //     const clients=this.namespace.sockets;
-        //     clients.forEach(client => client.disconnect());
-
-		//     this.users=[];
-        // },3000);
-
-       
-        
     }
 
 

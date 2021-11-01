@@ -53,16 +53,16 @@ const Game03=(props)=>{
             setMessage('End!');
             setShowConsole(false);
 
-            if(!liff.isInClient()) return;
+            // if(!liff.isInClient()) return;
 
-            liff.sendMessages([{
-                'type': 'text',
-                'text': "看分數"
-            }]).then(function() {
-                liff.closeWindow();
-            }).catch(function(error) {
-                window.alert('Error sending message: ' + error);
-            });
+            // liff.sendMessages([{
+            //     'type': 'text',
+            //     'text': "看分數"
+            // }]).then(function() {
+            //     // liff.closeWindow();
+            // }).catch(function(error) {
+            //     window.alert('Error sending message: ' + error);
+            // });
 
         });
 
