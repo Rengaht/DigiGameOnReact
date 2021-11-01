@@ -80,6 +80,13 @@ class Game03{
             socket.on(GameEvent.Score,(data)=>{
                 console.log("get score data!!!");
                 console.log(JSON.stringify(data));
+
+                if(this.users[data.uid]){
+                    this.users[data.uid].socket.emit(GameEvent.Score,{
+                        uid:data.uid,
+                        data: data.score,
+                    });
+                }
             });
             
 
