@@ -53,6 +53,8 @@ const Game03=(props)=>{
             setMessage('End!');
             setShowConsole(false);
 
+            if(!liff.isInClient()) return;
+
             liff.sendMessages([{
                 'type': 'text',
                 'text': "看分數"
