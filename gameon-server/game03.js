@@ -80,9 +80,11 @@ class Game03{
             socket.on(GameEvent.Score,(data)=>{
                 console.log("get score data!!!");
                 console.log(JSON.stringify(data));
-
-                if(this.users[data.uid]){
-                    this.users[data.uid].socket.emit(GameEvent.Score,{
+		
+		const user=this.users.find(el=> el.uid==data.uid);
+                if(user){
+		   console.log("send to user:"+user.uid);
+                    user.socket.emit(GameEvent.Score,{
                         uid:data.uid,
                         data: data.score,
                     });
@@ -109,7 +111,7 @@ class Game03{
             socket:socket
         });
 
-        // var count=this.updatePlayer();
+        var count=this.updatePlayer();
         // console.log(`User in ${this.name} = ${count}`);
 
         if(this.unity){
