@@ -16,7 +16,7 @@ const Game03=(props)=>{
     const [message, setMessage]=useState('');
 
     const [showConsole, setShowConsole]=useState(false);
-    // const [uid, setUId]=useState();
+    const [uid, setUId]=useState();
 
     const [score, setScore]=useState(0);
     const [players, setPlayers]=useState(0);
@@ -24,7 +24,9 @@ const Game03=(props)=>{
 
     const connectWs=()=>{
 
-        if(ws && ws.connected) return;
+        if(ws && ws.connected){
+		ws.disconnect();
+	}
 
         try{
             console.log('connect to socket...');
@@ -93,31 +95,41 @@ const Game03=(props)=>{
             setMessage("Joined !");
             setShowConsole(true);
 
-            // setUId(message_.data.uid);
+            setUId(message_.data.uid);
             setScore(0);
         });
+
     };
 
     
 
     // auto connect
-    useEffect(()=>{
-        
+    useEffect(()=>{        
         connectWs();
+	
+	return ()=>{
+		if(ws) ws.close();
+	}
+
     },[setWs]);
 
     useEffect(()=>{
         if(ws) initWs();
+
+	return ()=>{
+		if(ws) ws.close();
+	}
+
     },[ws]);
 
     const joinGame=()=>{
         ws.emit(GameEvent.Register,{
-            uid:props.rawId,            
+            uid:uid,            
         });
     };
     const sendMessage=(key_)=>{
         if(ws) ws.emit(GameEvent.Input, {
-            uid: props.rawId,
+            uid: uid,
             data:key_
         });
     };

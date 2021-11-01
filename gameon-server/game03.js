@@ -214,7 +214,7 @@ class Game03{
 		    // });		
 
             //disconnect all
-            const clients=this.namespace.clients();
+            const clients=this.namespace.sockets;
             clients.forEach(client => client.disconnect());
 
 		    this.users=[];
