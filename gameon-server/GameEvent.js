@@ -8,6 +8,7 @@ const GameEvent={
     Status: 'game_status',
     Score: 'game_score',
     Accept: 'game_accepted',
+    NewUser: 'game_new_user',
 
 
     Register: 'user_register',

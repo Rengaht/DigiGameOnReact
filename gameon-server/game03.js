@@ -56,44 +56,12 @@ class Game03{
             socket.on(GameEvent.Input,(data)=>{
 
                 if(!this.playing) return;
-
-                // console.log(`${this.name} input : ${data.uid} / ${data.key}`);
-                let user=this.users.find(el => el.uid==data.uid);
-                if(!user){
-			console.log(`no user ${data.uid}`);
-			return;
-		}
-		user.input+=data.data;
-
-                console.log(user.input);
-
-                var index_= user.input.indexOf(this.COMMAND);
-                // console.log(index_);
-                if(index_>-1){
-
-                    user.input=user.input.substring(index_+this.COMMAND.length);
-
-                    console.log("!"+user.input);
-
-                    user.score++;
-                    socket.emit(GameEvent.Score,{
-                        data: user.score
-                    });                    
-                }
-                
-
                 if(this.unity){
-                    this.unity.emit(GameEvent.Input,{
-                        score:user.score,
-                        ...data
-                    });
-                    // this.unity.emit(GameEvent.Score,{
-                    //     uid:user.uid,
-                    //     data:user.score
-                    // });
+                    this.unity.emit(GameEvent.Input,data);
                 }
 
             });
+
             
             socket.on(GameEvent.Disconnect, () => {
                 console.log('user disconnected');
@@ -101,6 +69,19 @@ class Game03{
                 let index_=this.users.indexOf(el => el.uid==data.uid);
                 this.users.splice(index_,1);
             });    
+
+            socket.on(GameEvent.Start,()=>{
+                this.startGame();
+            });
+            socket.on(GameEvent.End,()=>{
+                this.endGame();
+            });
+
+            socket.on(GameEvent.Score,(data)=>{
+                console.log("get score data!!!");
+                console.log(JSON.stringify(data));
+            });
+            
 
 
         });    
@@ -118,16 +99,18 @@ class Game03{
 
         this.users.push({
             uid:uid,
-            socket:socket,
-            input:'',
-            score:0
+            socket:socket
         });
 
-        var count=this.updatePlayer();
-        
-    
-        console.log(`User in ${this.name} = ${count}`);
-        if(count>=this.MIN_USER) this.startGame();
+        // var count=this.updatePlayer();
+        // console.log(`User in ${this.name} = ${count}`);
+
+        if(this.unity){
+            this.unity.emit(GameEvent.NewUser,{
+                uid:uid
+            });
+        }
+        // if(count>=this.MIN_USER) this.startGame();
 
     }
     updatePlayer(){
@@ -162,10 +145,10 @@ class Game03{
 
 
 
-        clearTimeout(this.gameTimer);        
-        this.gameTimer=setTimeout(()=>{
-            this.endGame();
-        },this.GAME_TIME);
+        // clearTimeout(this.gameTimer);        
+        // this.gameTimer=setTimeout(()=>{
+        //     this.endGame();
+        // },this.GAME_TIME);
     }
 
     endGame(){
@@ -186,42 +169,42 @@ class Game03{
 
         
 
-        this.users.forEach(user=>{
+        // this.users.forEach(user=>{
 		
-            if(user.uid=="unity") return;
+        //     if(user.uid=="unity") return;
 
-            console.log(`send user data ${user.uid} ${user.score}`);
+        //     console.log(`send user data ${user.uid} ${user.score}`);
 		
-            bonnie.writeParameterToBonnie({
-                "bot_id":"bot-M-BOieOXZ",
-                "bot_pid":"507oftxz",
-                "bot_channel":"1",
-                "bot_raw_uid": user.uid,     
-                "params":{
-                    "game03-score": {
-                        "value":user.score
-                    }
-                }
-            }).then(res=>{                    
-                console.log(JSON.stringify(res));
-            }).catch(err=>{
-                console.log(err);
-            });
-        });
+        //     bonnie.writeParameterToBonnie({
+        //         "bot_id":"bot-M-BOieOXZ",
+        //         "bot_pid":"507oftxz",
+        //         "bot_channel":"1",
+        //         "bot_raw_uid": user.uid,     
+        //         "params":{
+        //             "game03-score": {
+        //                 "value":user.score
+        //             }
+        //         }
+        //     }).then(res=>{                    
+        //         console.log(JSON.stringify(res));
+        //     }).catch(err=>{
+        //         console.log(err);
+        //     });
+        // });
 
-	    setTimeout(()=>{
-		    console.log("//////// CLOSE ALL SOCKET ////////");
+	    // setTimeout(()=>{
+		//     console.log("//////// CLOSE ALL SOCKET ////////");
 
-		    // this.users.foreach(user=>{
-			//     user.socket.disconnect();
-		    // });		
+		//     // this.users.foreach(user=>{
+		// 	//     user.socket.disconnect();
+		//     // });		
 
-            //disconnect all
-            const clients=this.namespace.sockets;
-            clients.forEach(client => client.disconnect());
+        //     //disconnect all
+        //     const clients=this.namespace.sockets;
+        //     clients.forEach(client => client.disconnect());
 
-		    this.users=[];
-        },3000);
+		//     this.users=[];
+        // },3000);
 
        
         
